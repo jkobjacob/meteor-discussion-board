@@ -13,11 +13,21 @@ export const LoginPage = () => {
     setUserPassword("");
   };
 
+  const handleLoginError = (error) => {
+    if (error) {
+      setIsError([true, error.reason]);
+    } else {
+      console.log("logged in");
+      clearInputFields();
+    }
+  };
+
   const handleRegisterError = (error) => {
     if (error) {
       setIsError([true, error.reason]);
     } else {
       console.log("signed up");
+      clearInputFields();
     }
   };
 
@@ -25,7 +35,7 @@ export const LoginPage = () => {
     event.preventDefault();
 
     if (isExistingUser) {
-      console.log("login");
+      Meteor.loginWithPassword(userEmail, userPassword, handleLoginError);
     } else {
       Accounts.createUser(
         {
@@ -35,8 +45,6 @@ export const LoginPage = () => {
         handleRegisterError
       );
     }
-
-    clearInputFields();
   };
 
   return (
