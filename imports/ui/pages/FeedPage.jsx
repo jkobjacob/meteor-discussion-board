@@ -36,9 +36,21 @@ export const FeedPage = (props) => {
     },
   ];
 
-  const [textArea, setTextArea] = useState("");
+  const makeMockComment = (text) => {
+    return {
+      userName: "mockuser@mock.com",
+      commentText: text,
+      date: new Date(),
+    };
+  };
 
-  const handlePostedComment = () => {};
+  const [textArea, setTextArea] = useState("");
+  const [comments, setComments] = useState(mockComments);
+
+  const handlePostedComment = () => {
+    setComments([...comments, makeMockComment(textArea)]);
+    setTextArea("");
+  };
 
   return (
     <div className="container-fluid">
@@ -60,7 +72,7 @@ export const FeedPage = (props) => {
           </div>
           <div className="row comments__section">
             <div className="col-sm-12 col-md-12">
-              {mockComments.map((comment, idx) => {
+              {comments.map((comment, idx) => {
                 return (
                   <Comment
                     key={idx}
