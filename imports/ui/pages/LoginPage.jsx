@@ -69,7 +69,7 @@ export const LoginPage = () => {
             type="email"
             className="form-control"
             id="userEmail"
-            placeHolder="Email"
+            placeholder="Email"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
             onKeyDown={(e) =>
@@ -85,7 +85,7 @@ export const LoginPage = () => {
             type="password"
             className="form-control"
             id="userPassword"
-            placeHolder="Password"
+            placeholder="Password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
             onKeyDown={(e) =>
@@ -101,7 +101,9 @@ export const LoginPage = () => {
           </button>
         </div>
         <div>
-          <span onClick={() => setIsExistingUser(!isExistingUser)}>
+          <span
+            className="link"
+            onClick={() => setIsExistingUser(!isExistingUser)}>
             {isExistingUser
               ? `Don't have an account? Sign up`
               : `Already have an account? Log In`}

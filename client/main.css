@@ -12,6 +12,15 @@ body {
   border-radius: 5px;
 }
 
+.link {
+  color: #428bca;
+  text-decoration: underline;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
 /* Feed Page */
 .comment__input_section {
   display: flex;
