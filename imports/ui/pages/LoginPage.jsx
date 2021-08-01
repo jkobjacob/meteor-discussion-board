@@ -1,4 +1,5 @@
 import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import React, { useState } from "react";
 
 export const LoginPage = () => {
@@ -11,13 +12,27 @@ export const LoginPage = () => {
     setUserPassword("");
   };
 
+  const handleRegisterError = (error) => {
+    if (error) {
+      console.log(error.reason);
+    } else {
+      console.log("signed up");
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (isExistingUser) {
       console.log("login");
     } else {
-      console.log("register");
+      Accounts.createUser(
+        {
+          email: userEmail,
+          password: userPassword,
+        },
+        handleRegisterError
+      );
     }
 
     clearInputFields();
