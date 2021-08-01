@@ -2,3 +2,12 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+
+/* Login Page */
+
+.jumbotron {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
