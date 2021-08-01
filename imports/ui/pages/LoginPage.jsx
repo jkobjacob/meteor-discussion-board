@@ -1,12 +1,15 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export const LoginPage = () => {
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [isError, setIsError] = useState([false, ""]);
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const clearInputFields = () => {
     setUserEmail("");
@@ -16,18 +19,24 @@ export const LoginPage = () => {
   const handleLoginError = (error) => {
     if (error) {
       setIsError([true, error.reason]);
+      passwordRef.current.parentElement.classList.add("has-error");
+      passwordRef.current.focus();
     } else {
       console.log("logged in");
       clearInputFields();
+      return;
     }
   };
 
   const handleRegisterError = (error) => {
     if (error) {
       setIsError([true, error.reason]);
+      emailRef.current.parentElement.classList.add("has-error");
+      emailRef.current.focus();
     } else {
       console.log("signed up");
       clearInputFields();
+      return;
     }
   };
 
@@ -60,6 +69,10 @@ export const LoginPage = () => {
             placeHolder="Email"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
+            onKeyDown={(e) =>
+              emailRef.current.parentElement.classList.remove("has-error")
+            }
+            ref={emailRef}
             required
           />
         </div>
@@ -72,6 +85,10 @@ export const LoginPage = () => {
             placeHolder="Password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
+            onKeyDown={(e) =>
+              passwordRef.current.parentElement.classList.remove("has-error")
+            }
+            ref={passwordRef}
             required
           />
         </div>
