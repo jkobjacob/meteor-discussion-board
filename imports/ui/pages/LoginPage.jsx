@@ -57,9 +57,12 @@ export const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="jumbotron">
+      <h2 style={{ textAlign: "center", marginBottom: "5px" }}>
+        Login / Sign Up
+      </h2>
       <form onSubmit={handleSubmit}>
-        {isError[0] ? <p className="text-danger">{isError[1]}</p> : null}
+        {isError[0] ? <h5 className="text-danger">{isError[1]}</h5> : null}
         <div className="form-group">
           <label htmlFor="userEmail">Email address</label>
           <input
