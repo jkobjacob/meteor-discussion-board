@@ -11,3 +11,85 @@ body {
   padding: 20px;
   border-radius: 5px;
 }
+
+.link {
+  color: #428bca;
+  text-decoration: underline;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
+/* Feed Page */
+.comment__input_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 50px;
+}
+
+.comment__input_field {
+  padding: 10px;
+  resize: none;
+  border: none;
+  box-shadow: none;
+}
+
+.comment__input_field:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.comments__section {
+  margin-top: 20px;
+}
+
+.feedpage__user_section {
+  display: flex;
+}
+
+.feedpage__avatar {
+  margin-top: 8px;
+  width: 70px;
+  height: 70px;
+  background: #428bca;
+  border-radius: 50%;
+}
+
+.feedpage__user_info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+/* Comment Component */
+
+.panel-default > .panel-heading {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: none;
+  background: none;
+}
+
+.panel-title {
+  margin-left: 10px;
+}
+
+.user__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #5bc0de;
+}
+
+.post__date {
+  font-weight: lighter;
+  font-size: 0.8em;
+}
+
+.comment__text {
+  margin-left: 10px;
+  padding: 0px 10px 10px 10px;
+}
