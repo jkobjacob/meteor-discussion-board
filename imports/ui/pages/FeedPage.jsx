@@ -1,8 +1,9 @@
 import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-
+import { useTracker } from "meteor/react-meteor-data";
 import { Comment } from "/imports/ui/components/Comment";
+import Comments from "/imports/db/comments/collection";
 
 const convertToDateString = (date) => {
   const padZero = (x) => (x < 10 ? `0${x}` : x);
@@ -13,42 +14,34 @@ const convertToDateString = (date) => {
   return `${date.toDateString()}, ${padZero(hours)}:${padZero(minutes)}`;
 };
 
+const makeComment = (commentText, userName) => {
+  return {
+    userName,
+    commentText,
+    date: new Date(),
+  };
+};
+
 export const FeedPage = (props) => {
   if (!Meteor.user()) {
     return <Redirect to="/login" />;
   }
 
-  const mockComments = [
-    {
-      userName: "sherinjacob20@gmail.com",
-      commentText: "Nothing to comment on.",
-      date: new Date(),
-    },
-    {
-      userName: "sherinjacob20@gmail.com",
-      commentText: "Nothing to comment on.",
-      date: new Date(),
-    },
-    {
-      userName: "sherinjacob20@gmail.com",
-      commentText: "Nothing to comment on.",
-      date: new Date(),
-    },
-  ];
-
-  const makeMockComment = (text) => {
-    return {
-      userName: "mockuser@mock.com",
-      commentText: text,
-      date: new Date(),
-    };
-  };
-
+  const currentUserName = Meteor.user().emails[0].address;
   const [textArea, setTextArea] = useState("");
-  const [comments, setComments] = useState(mockComments);
+  const { comments, isLoading } = useTracker(() => {
+    const handler = Meteor.subscribe("comments");
+
+    if (!handler.ready()) {
+      return { comments: [], isLoading: true };
+    }
+
+    const comments = Comments.find({}, { sort: { date: -1 } }).fetch();
+    return { comments: comments, isLoading: false };
+  });
 
   const handlePostedComment = () => {
-    setComments([...comments, makeMockComment(textArea)]);
+    Meteor.call("comments.insert", makeComment(textArea, currentUserName));
     setTextArea("");
   };
 
@@ -72,6 +65,7 @@ export const FeedPage = (props) => {
           </div>
           <div className="row comments__section">
             <div className="col-sm-12 col-md-12">
+              {isLoading && <div>Loading</div>}
               {comments.map((comment, idx) => {
                 return (
                   <Comment
@@ -88,7 +82,7 @@ export const FeedPage = (props) => {
         <div className="col-sm-4 col-md-4 feedpage__user_section">
           <div className="feedpage__avatar"></div>
           <div className="feedpage__user_info">
-            <h4>sherinjacob20</h4>
+            <h4>{currentUserName}</h4>
             <button
               onClick={() => {
                 Meteor.logout();
