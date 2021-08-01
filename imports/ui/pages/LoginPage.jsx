@@ -6,6 +6,7 @@ export const LoginPage = () => {
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [isError, setIsError] = useState([false, ""]);
 
   const clearInputFields = () => {
     setUserEmail("");
@@ -14,7 +15,7 @@ export const LoginPage = () => {
 
   const handleRegisterError = (error) => {
     if (error) {
-      console.log(error.reason);
+      setIsError([true, error.reason]);
     } else {
       console.log("signed up");
     }
@@ -41,6 +42,7 @@ export const LoginPage = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        {isError[0] ? <p className="text-danger">{isError[1]}</p> : null}
         <div className="form-group">
           <label htmlFor="userEmail">Email address</label>
           <input
