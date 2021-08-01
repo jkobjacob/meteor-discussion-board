@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 
 export const LoginPage = () => {
+  const [isExistingUser, setIsExistingUser] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -12,7 +13,12 @@ export const LoginPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(userEmail, userPassword);
+
+    if (isExistingUser) {
+      console.log("login");
+    } else {
+      console.log("register");
+    }
 
     clearInputFields();
   };
@@ -46,10 +52,16 @@ export const LoginPage = () => {
         </div>
         <div className="form-group">
           <button type="submit" className="btn btn-primary">
-            Log In
+            {isExistingUser ? `Log In` : `Sign Up`}
           </button>
         </div>
-        <div></div>
+        <div>
+          <span onClick={() => setIsExistingUser(!isExistingUser)}>
+            {isExistingUser
+              ? `Don't have an account? Sign up`
+              : `Already have an account? Log In`}
+          </span>
+        </div>
       </form>
     </div>
   );
