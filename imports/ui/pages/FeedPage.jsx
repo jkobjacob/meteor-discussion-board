@@ -5,7 +5,12 @@ import { Redirect } from "react-router-dom";
 import { Comment } from "/imports/ui/components/Comment";
 
 const convertToDateString = (date) => {
-  return date.toDateString();
+  const padZero = (x) => (x < 10 ? `0${x}` : x);
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  return `${date.toDateString()}, ${padZero(hours)}:${padZero(minutes)}`;
 };
 
 export const FeedPage = (props) => {
